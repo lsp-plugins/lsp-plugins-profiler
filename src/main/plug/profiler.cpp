@@ -189,15 +189,10 @@ namespace lsp
         status_t profiler::Saver::run()
         {
             // Doing Checks:
-            if (pCore->bIRMeasured)
+            if (!pCore->bIRMeasured)
             {
-                pCore->pIRSaveStatus->set_value(STATUS_LOADING);
-                pCore->pIRSavePercent->set_value(0.0f);
-            }
-            else
-            {
-                pCore->pIRSaveStatus->set_value(STATUS_NO_DATA);
-                pCore->pIRSavePercent->set_value(0.0f);
+                pCore->sSaveData.enSaveStatus = STATUS_NO_DATA;
+                pCore->sSaveData.fSavePercent = 0.0f;
                 return STATUS_NO_DATA;
             }
 
@@ -258,13 +253,13 @@ namespace lsp
 
             if (returnValue == STATUS_OK)
             {
-                pCore->pIRSavePercent->set_value(100.0f);
-                pCore->pIRSaveStatus->set_value(STATUS_OK);
+                pCore->sSaveData.enSaveStatus = STATUS_OK;
+                pCore->sSaveData.fSavePercent = 100.0f;
             }
             else
             {
-                pCore->pIRSavePercent->set_value(0.0f);
-                pCore->pIRSaveStatus->set_value(STATUS_UNKNOWN_ERR);
+                pCore->sSaveData.enSaveStatus = STATUS_UNKNOWN_ERR;
+                pCore->sSaveData.fSavePercent = 0.0f;
             }
 
             return returnValue;
@@ -278,6 +273,9 @@ namespace lsp
 
             sResponseData.vResponses    = NULL;
             sResponseData.vOffsets      = NULL;
+
+            sSaveData.enSaveStatus      = STATUS_OK;
+            sSaveData.fSavePercent      = 0.0f;
 
             nState                      = IDLE;
 
@@ -448,6 +446,12 @@ namespace lsp
                 pWrapper->query_display_draw();
 
             return true;
+        }
+
+        void profiler::update_saving_info()
+        {
+            pIRSaveStatus->set_value(sSaveData.enSaveStatus);
+            pIRSavePercent->set_value(sSaveData.fSavePercent);
         }
 
         dspu::scp_rtcalc_t profiler::get_rt_algorithm(size_t algorithm)
@@ -658,8 +662,6 @@ namespace lsp
                 TRACE_PORT(vPorts[port_id]);
                 vChannels[ch].pResultMesh       = vPorts[port_id++];
             }
-
-            pStateLEDs->set_value(nState);
         }
 
         void profiler::update_sample_rate(long sr)
@@ -921,9 +923,16 @@ namespace lsp
                     case SAVING:
                     {
                         if (pSaver->idle())
+                        {
+                            sSaveData.enSaveStatus = STATUS_LOADING;
+                            sSaveData.fSavePercent = 0.0f;
+                            update_saving_info();
+
                             pExecutor->submit(pSaver);
+                        }
                         else if (pSaver->completed())
                         {
+                            update_saving_info();
                             nState      = IDLE;
                             pSaver->reset();
                         }
@@ -1142,7 +1151,6 @@ namespace lsp
                 for (size_t ch = 0; ch < nChannels; ++ch)
                     vChannels[ch].sLatencyDetector.reset_capture();
 
-                reset_saver = true;
                 nState      = IDLE;
             }
 
@@ -1230,6 +1238,14 @@ namespace lsp
                 v->writev(r->vOffsets, nChannels);
                 v->write("pData", r->pData);
             }
+            v->end_object();
+            v->begin_object("sSaveData", &sSaveData, sizeof(save_t));
+            {
+                const save_t *s = &sSaveData;
+                v->write("enSaveStatus", s->enSaveStatus);
+                v->write("fSavePercent", s->fSavePercent);
+            }
+            v->end_object();
 
             v->write("nState", nState);
 
