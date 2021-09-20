@@ -2,85 +2,84 @@
 	<vbox spacing="4">
 		<group text="groups.results" expand="true" fill="true">
 			<grid rows="3" cols="2" hspacing="8" vspacing="4">
-				<graph width="512" height="320" expand="true" fill="true">
-					<center hpos="-1.0" vpos="0.0" visible="false" />
-                    <center hpos="-1.0" vpos="0.5" visible="false" />
-                    <center hpos="-1.0" vpos="-0.5" visible="false" />
+				<graph width.min="512" height.min="320" expand="true" fill="true">
+					<origin hpos="-1.0" vpos="0.0" visible="false" />
+                    <origin hpos="-1.0" vpos="0.5" visible="false" />
+                    <origin hpos="-1.0" vpos="-0.5" visible="false" />
 
-                    <mesh id="rme_l" width="3" color="left_channel" smooth="true" center="1" />
-                    <mesh id="rme_r" width="3" color="right_channel" smooth="true" center="2" />
-
-                    <marker value="-1.75" color="g_gray" basis="1" parallel="0" />
-                    <marker value="-1.25" color="g_gray" basis="1" parallel="0" />
-					<marker value="-0.75" color="g_gray" basis="1" parallel="0" />
-					<marker value="-0.25" color="g_gray" basis="1" parallel="0" />
-					<marker value="0.25" color="g_gray" basis="1" parallel="0" />
-					<marker value="0.75" color="g_gray" basis="1" parallel="0" />
-                    <marker value="1.25" color="g_gray" basis="1" parallel="0" />
-                    <marker value="1.75" color="g_gray" basis="1" parallel="0" />
-
-					<marker value="0.25" color="g_gray" basis="0" parallel="1" />
-					<marker value="0.75" color="g_gray" basis="0" parallel="1" />
-					<marker value="1.25" color="g_gray" basis="0" parallel="1" />
-					<marker value="1.75" color="g_gray" basis="0" parallel="1" />
-
-                    <marker value="-1.50" color="g_yellow" basis="1" parallel="0" />
-					<marker value="-0.50" color="g_yellow" basis="1" parallel="0" />
-					<marker value="0.50" color="g_yellow" basis="1" parallel="0" />
-                    <marker value="1.50" color="g_yellow" basis="1" parallel="0" />
-					<marker value="0.5" color="g_yellow" basis="0" parallel="1" />
-					<marker value="1.5" color="g_yellow" basis="0" parallel="1" />
-
-                    <marker value="-2.00" color="g_white" basis="1" parallel="0" />
-                    <marker value="2.00" color="g_white" basis="1" parallel="0" />
-					<marker value="2" color="g_white" basis="0" parallel="1" />
-					<marker value="-1.00" color="g_white" basis="1" parallel="0" />
-					<marker value="1.00" color="g_white" basis="1" parallel="0" />
-					<marker value="1" color="g_white" basis="0" parallel="1" />
+					<!-- Grid -->
+					<ui:with color="graph_alt_1">
+						<ui:for id="g" first="-7" last="7" step="2">
+	                    	<marker v="${:g * 0.25}" ox="1" oy="0" />
+	                    </ui:for>
+						<ui:for id="t" first="1" last="7" step="2">
+							<marker v="${:t * 0.25}" />
+						</ui:for>
+					</ui:with>
+					<ui:with color="graph_sec">
+	                    <marker v="-1.50" ox="1" oy="0" />
+						<marker v="-0.50" ox="1" oy="0" />
+						<marker v="0.50" ox="1" oy="0" />
+	                    <marker v="1.50" ox="1" oy="0" />
+						<marker v="0.5" />
+						<marker v="1.5" />
+					</ui:with>
+					<ui:with color="graph_prim">
+	                    <marker v="-2.00" ox="1" oy="0" />
+	                    <marker v="2.00" ox="1" oy="0" />
+						<marker v="2" />
+						<marker v="-1.00" ox="1" oy="0" />
+						<marker v="1.00" ox="1" oy="0" />
+						<marker v="1" />
+					</ui:with>
 					
-					<axis min="0" max="2.0" color="g_white" angle="0.0" logarithmic="false" />
-					<axis min="-2.0" max="2.0" color="g_white" angle="0.5" logarithmic="false" />
+					<axis min="0" max="2.0" angle="0.0" log="false" />
+					<axis min="-2.0" max="2.0" angle="0.5" log="false" />
+					
+					<!-- Meshes -->
+                    <mesh id="rme_l" o="1" width="3" color="left" smooth="true" />
+                    <mesh id="rme_r" o="2" width="3" color="right" smooth="true" />
 
-					<text text="graph.axis.reverb_time" coord="0;-2" halign="1" valign="1" />
-					<text text="0.25" coord="0.5;-2" halign="-1" valign="1" />
-					<text text="0.5" coord="1;-2" halign="-1" valign="1" />
-					<text text="0.75" coord="1.5;-2" halign="-1" valign="1" />
-					<text text="1.0" coord="2;-2" halign="-1" valign="1" />
-
-                    <text text="graph.axis.chan.left" color="left_channel" coord="0;2" halign="1" valign="-1" />
-					<text text="0.5" coord="0;1.5" halign="1" valign="-1" />
-					<text text="0" coord="0;1.0" halign="1" valign="-1" />
-					<text text="-0.5" coord="0;0.5" halign="1" valign="-1" />
-
-					<text text="graph.axis.chan.right" color="right_channel" coord="0;0" halign="1" valign="-1" />
-					<text text="0.5" coord="0;-0.5" halign="1" valign="-1" />
-					<text text="0" coord="0;-1.0" halign="1" valign="-1" />
-					<text text="-0.5" coord="0;-1.5" halign="1" valign="-1" />
+					<!-- Text -->
+					<ui:with y="-2" halign="-1" valign="1">
+						<text x="0" text="graph.axis.reverb_time" halign="1" />
+						<text x="0.5" text="0.25" />
+						<text x="1" text="0.5" />
+						<text x="1.5" text="0.75" />
+						<text x="2" text="1.0" />
+					</ui:with>
+					<ui:with x="0" halign="1" valign="-1">
+	                    <text y="2" text="graph.axis.chan.left" color="left" />
+						<text y="1.5" text="0.5" />
+						<text y="1" text="0" />
+						<text y="0.5" text="-0.5" />
+	
+						<text y="0" text="graph.axis.chan.right" color="right" />
+						<text y="-0.5" text="0.5" />
+						<text y="-1" text="0" />
+						<text y="-1.5" text="-0.5" />
+					</ui:with>
 				</graph>
 
 				<cell rows="2">
 					<vbox spacing="4">
-						<label text="labels.prof.profiler_state" fill="true" halign="0" />
+						<label text="labels.prof.profiler_state" fill="true" text.halign="-1" />
 						<grid rows="9" cols="2" hspacing="2" transpose="true">
-							<led id="stld" key="0" />
-							<led id="stld" key="1" />
-							<led id="stld" key="2" />
-							<led id="stld" key="3" />
-							<led id="stld" key="4" />
-							<led id="stld" key="5" />
-							<led id="stld" key="6" />
-							<led id="stld" key="7" />
-							<led id="stld" key="8" />
-
-							<label text="labels.prof.idle" fill="true" halign="0" />
-							<label text="labels.prof.calibrating" fill="true" halign="0" />
-							<label text="labels.prof.detecting_latency" fill="true" halign="0" />
-							<label text="labels.prof.preprocessing" fill="true" halign="0" />
-							<label text="labels.prof.waiting" fill="true" halign="0" />
-							<label text="labels.prof.recording" fill="true" halign="0" />
-							<label text="labels.prof.convolving" fill="true" halign="0" />
-							<label text="labels.prof.postprocessing" fill="true" halign="0" />
-							<label text="labels.prof.saving" fill="true" halign="0" />
+							<ui:for id="i" first="0" last="8">
+								<led id="stld" key="${i}" />
+							</ui:for>
+							
+							<ui:with hfill="true" text.halign="-1">
+								<label text="labels.prof.idle" />
+								<label text="labels.prof.calibrating" />
+								<label text="labels.prof.detecting_latency" />
+								<label text="labels.prof.preprocessing" />
+								<label text="labels.prof.waiting" /> 
+								<label text="labels.prof.recording" />
+								<label text="labels.prof.convolving" />
+								<label text="labels.prof.postprocessing" />
+								<label text="labels.prof.saving" />
+							</ui:with>
 						</grid>
 						<hsep />
 
@@ -139,7 +138,7 @@
 		</group>
 
 		<hbox spacing="4">
-			<group text="groups.plug.calibrator" expand="true" fill="true">
+			<group text="groups.plug.calibrator">
 				<grid rows="3" cols="3" hspacing="5">
 					<label text="labels.frequency" />
 					<label text="labels.amplitude" />
@@ -162,7 +161,7 @@
 				</grid>
 			</group>
 
-			<group text="groups.plug.latency_detector" expand="true" fill="true">
+			<group text="groups.plug.latency_detector">
 				<grid rows="3" cols="4" hspacing="5">
 					<label text="labels.max_latency" />
 					<label text="labels.signal.peak"/>
@@ -188,7 +187,7 @@
 				</grid>
 			</group>
 
-			<group text="groups.test_signal" expand="true" fill="true">
+			<group text="groups.test_signal">
 				<grid rows="3" cols="2" hspacing="5">
 					<label text="labels.coarse_duration" fill="true" />
 					<label text="labels.actual_duration" fill="true" />
