@@ -105,12 +105,12 @@
 				</cell>
 
 				<hbox spacing="2">
-					<label text="labels.reverberation_time:s" halign="0" />
-					<indicator id="rti" format="f6.3!" text_color="green" fill="false" />
-					<label text="labels.energy_decay_linear_correlation" halign="0" />
-					<indicator id="rci" format="f6.3!" text_color="green" fill="false" />
-					<label text="labels.coarse_ir_duration" halign="0" />
-					<indicator id="ili" format="f6.3!" text_color="green" fill="false" />
+					<label text="labels.reverberation_time:s" text.halign="-1" />
+					<indicator id="rti" format="f6.3!" text_color="mid" fill="false" />
+					<label text="labels.energy_decay_linear_correlation" text.halign="-1" />
+					<indicator id="rci" format="f6.3!" text_color="mid" fill="false" />
+					<label text="labels.coarse_ir_duration" text.halign="-1" />
+					<indicator id="ili" format="f6.3!" text_color="mid" fill="false" />
 				</hbox>
 			</grid>
 		</group>
@@ -124,7 +124,11 @@
 					
 					<knob id="calf" />
 					<knob id="cala" />
-					<meter id="ilv" angle="0.0" logarithmic="true" min="-72 db" max="24 db" height="128" color="green" type="rms_peak" />
+					<ledmeter hexpand="true" angle="0" height.min="192">
+						<ledchannel id="ilv" min="-72 db" max="12 db" log="true" type="rms_peak"
+							peak.visibility="true"
+							value.color="mid" />
+					</ledmeter>
 					
 					<value id="calf" />
 					<value id="cala" />
