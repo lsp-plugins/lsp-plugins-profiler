@@ -204,27 +204,27 @@ namespace lsp
 
                 dspu::SyncChirpProcessor    sSyncChirpProcessor;    // To handle Synch Chirp profiling signal and related operations
 
-                ipc::IExecutor              *pExecutor;              // Executor Service
-                PreProcessor                *pPreProcessor;          // Pre Processor Task
-                Convolver                   *pConvolver;             // Convolver Task
-                PostProcessor               *pPostProcessor;         // Post Processor Task
-                Saver                       *pSaver;                 // Saver Task
+                ipc::IExecutor             *pExecutor;              // Executor Service
+                PreProcessor               *pPreProcessor;          // Pre Processor Task
+                Convolver                  *pConvolver;             // Convolver Task
+                PostProcessor              *pPostProcessor;         // Post Processor Task
+                Saver                      *pSaver;                 // Saver Task
 
-                size_t                       nSampleRate;            // Sample Rate
-                float                        fLtAmplitude;           // Amplitude factor for Latency Detection chirp
-                ssize_t                      nWaitCounter;           // Count the samples for wait state
-                bool                         bDoLatencyOnly;         // If true, only latency is measured
+                size_t                      nSampleRate;            // Sample Rate
+                float                       fLtAmplitude;           // Amplitude factor for Latency Detection chirp
+                ssize_t                     nWaitCounter;           // Count the samples for wait state
+                bool                        bDoLatencyOnly;         // If true, only latency is measured
 
-                float                        fScpDurationPrevious;   // Store Sync Chirp Duration Setting between calls to update_settings()
-                bool                         bIRMeasured;            // If true, an IR measurement was performed and post processed
-                size_t                       nSaveMode;              // Hold save mode enumeration index
+                float                       fScpDurationPrevious;   // Store Sync Chirp Duration Setting between calls to update_settings()
+                bool                        bIRMeasured;            // If true, an IR measurement was performed and post processed
+                size_t                      nSaveMode;              // Hold save mode enumeration index
 
-                size_t                       nTriggers;              // Set of triggers controlled by triggers_t
+                size_t                      nTriggers;              // Set of triggers controlled by triggers_t
 
-                float                       *vTempBuffer;            // Additional auxiliary buffer for processing
-                float                       *vDisplayAbscissa;       // Buffer for display. Abscissa data
-                float                       *vDisplayOrdinate;       // Buffer for display. Ordinate data
-                uint8_t                     *pData;
+                float                      *vTempBuffer;            // Additional auxiliary buffer for processing
+                float                      *vDisplayAbscissa;       // Buffer for display. Abscissa data
+                float                      *vDisplayOrdinate;       // Buffer for display. Ordinate data
+                uint8_t                    *pData;
 
                 plug::IPort                *pBypass;
                 plug::IPort                *pStateLEDs;             // State LEDs

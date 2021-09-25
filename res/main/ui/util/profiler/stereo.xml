@@ -110,8 +110,12 @@
 								</hbox>
 							</vbox>
 							<vbox>
-								<save id="irfn" format="wav" command_id="irfc" status_id="irfs" progress_id="irfp" visibility="(:scsv != 4)" />
-								<save id="irfn" format="lspc" command_id="irfc" status_id="irfs" progress_id="irfp" visibility="(:scsv == 4)" />
+								<save id="irfn" command.id="irfc" progress.id="irfp" status=":irfs"
+									path.id="_ui_dlg_ir_path"
+									format="wav" visibility="(:scsv != 4)" />
+								<save id="irfn" command.id="irfc" progress.id="irfp" status=":irfs"
+									path.id="_ui_dlg_ir_path"
+									format="lspc" visibility="(:scsv == 4)" />
 							</vbox>
 						</grid>
 					</vbox>

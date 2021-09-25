@@ -931,11 +931,17 @@ namespace lsp
             }
 
             // Set state to SAVING if all conditions are met
-            if ((pIRSaveCmd->value() > 0.5f) &&
-                (nState == IDLE) &&
-                (bIRMeasured) &&
-                (pSaver->is_file_set()))
-                nState = SAVING;
+            if (pIRSaveCmd->value() > 0.5f)
+            {
+                if ((nState == IDLE) && (bIRMeasured) && (pSaver->is_file_set()))
+                    nState = SAVING;
+                else if (nState != SAVING)
+                {
+                    sSaveData.enSaveStatus  = STATUS_BAD_STATE;
+                    sSaveData.fSavePercent  = 0.0f;
+                    update_saving_info();
+                }
+            }
 
             //---------------------------------------------------------------------
             // Perform processing loop
