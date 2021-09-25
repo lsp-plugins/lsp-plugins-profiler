@@ -679,6 +679,230 @@ namespace lsp
             sSyncChirpProcessor.set_sample_rate(sr);
         }
 
+        void profiler::process_buffer(size_t to_do)
+        {
+            switch (nState)
+            {
+                case IDLE:
+                {
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::fill_zero(vChannels[ch].vBuffer, to_do);
+                }
+                break;
+
+                case CALIBRATION:
+                {
+                    // Create one calibrator output sequence all, and copy it over the other channels
+                    if (nTriggers & T_CALIBRATION)
+                    {
+                        sCalOscillator.process_overwrite(vTempBuffer, to_do);
+                    }
+                    else
+                    {
+                        dsp::fill_zero(vTempBuffer, to_do);
+                        // This state transition is here, instead than in update_settings(), to avoid
+                        // forcing IDLE every time the calibrator is found off (which could happen during system test
+                        // if a control is moved).
+                        nState  = IDLE;
+                    }
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::copy(vChannels[ch].vBuffer, vTempBuffer, to_do);
+                }
+                break;
+
+                case LATENCYDETECTION:
+                {
+                    // Transition to next states only if all latency detectors have finished the job
+                    bool bAllMeasured = true;
+                    bool bAllComplete = true;
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                    {
+                        channel_t *c = &vChannels[ch];
+
+                        c->sLatencyDetector.process_in(c->vBuffer, c->vIn, to_do);
+
+                        if (!(nTriggers & T_FEEDBACK))
+                            dsp::fill_zero(c->vBuffer, to_do);
+
+                        c->sLatencyDetector.process_out(c->vBuffer, c->vBuffer, to_do);
+                        dsp::mul_k2(c->vBuffer, fLtAmplitude, to_do);
+
+                        if (c->sLatencyDetector.latency_detected())
+                        {
+                            c->bLatencyMeasured = true;
+                            c->bLCycleComplete  = true;
+                            c->nLatency         = c->sLatencyDetector.get_latency_samples();
+
+                            c->pLatencyScreen->set_value(c->sLatencyDetector.get_latency_seconds() * 1000.0f); // * 1000.0f to show ms instead of s
+                            c->sResponseTaker.set_latency_samples(c->nLatency);
+                            c->sLatencyDetector.reset_capture();
+                        }
+                        else if (c->sLatencyDetector.cycle_complete())
+                        {
+                            c->bLatencyMeasured = false;
+                            c->bLCycleComplete  = true;
+                            c->nLatency         = 0;
+                            c->sLatencyDetector.reset_capture();
+                        }
+
+                        bAllMeasured = bAllMeasured && vChannels[ch].bLatencyMeasured;
+                        bAllComplete = bAllComplete && vChannels[ch].bLCycleComplete;
+                    }
+
+                    if (bAllMeasured)
+                    {
+                        nState              = (bDoLatencyOnly) ? IDLE : PREPROCESSING;
+                        bDoLatencyOnly      = false;
+                    }
+                    else if (bAllComplete)
+                    {
+                        nState              = IDLE;
+                    }
+
+                    nWaitCounter           -= to_do;
+                }
+                break;
+
+                case PREPROCESSING:
+                {
+                    // Check task state. If needed (first time we get here after state transition) submit the
+                    // task.
+                    if (pPreProcessor->idle())
+                        pExecutor->submit(pPreProcessor);
+                    else if (pPreProcessor->completed()) // Advance machine status only if when (and if) the pre processing task is completed
+                    {
+                        nState = (pPreProcessor->successful()) ? WAIT : IDLE;
+                        if (nState == WAIT)
+                            update_pre_processing_info();
+
+                        pPreProcessor->reset();
+                    }
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::fill_zero(vChannels[ch].vBuffer, to_do);
+
+                    nWaitCounter   -= to_do;
+                }
+                break;
+
+                case WAIT:
+                {
+                    if (nWaitCounter <= 0)
+                    {
+                        bIRMeasured = false;
+                        nState      = RECORDING;
+
+                        for (size_t ch = 0; ch < nChannels; ++ch)
+                        {
+                            vChannels[ch].sResponseTaker.start_capture();
+                            vChannels[ch].bRCycleComplete = false;
+                        }
+                    }
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::fill_zero(vChannels[ch].vBuffer, to_do);
+
+                    nWaitCounter   -= to_do;
+                }
+                break;
+
+                case RECORDING:
+                {
+                    bool bAllComplete = true;
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                    {
+                        channel_t *c = &vChannels[ch];
+
+                        c->sResponseTaker.process_in(c->vBuffer, c->vIn, to_do);
+
+                        if (!(nTriggers & T_FEEDBACK))
+                            dsp::fill_zero(c->vBuffer, to_do);
+
+                        c->sResponseTaker.process_out(c->vBuffer, c->vBuffer, to_do);
+
+                        if (c->sResponseTaker.cycle_complete())
+                        {
+                            c->bRCycleComplete = true;
+                            c->sResponseTaker.reset_capture();
+                        }
+
+                        bAllComplete = bAllComplete && c->bRCycleComplete;
+                    }
+
+                    if (bAllComplete)
+                        nState = CONVOLVING;
+                }
+                break;
+
+                case CONVOLVING:
+                {
+                    if (pConvolver->idle())
+                        pExecutor->submit(pConvolver);
+                    else if (pConvolver->completed())
+                    {
+                        bIRMeasured = true;
+                        pConvolver->reset();
+                        nState = POSTPROCESSING;
+                    }
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::fill_zero(vChannels[ch].vBuffer, to_do);
+                }
+                break;
+
+                case POSTPROCESSING:
+                {
+                    if (pPostProcessor->idle())
+                    {
+                        ssize_t nIROffset = dspu::millis_to_samples(nSampleRate, pIROffset->value());
+                        pPostProcessor->set_ir_offset(nIROffset);
+                        pSaver->set_ir_offset(nIROffset); // We set it here also for the saver, so that it matches the postprocessing value.
+                        pPostProcessor->set_rt_algo(get_rt_algorithm(pRTAlgoSelector->value()));
+                        pExecutor->submit(pPostProcessor);
+                    }
+                    else if (pPostProcessor->completed())
+                    {
+                        // We should loop until the output mesh is committed to UI
+                        if (update_post_processing_info())
+                        {
+                            bIRMeasured = true;
+                            nState      = IDLE;
+                            pPostProcessor->reset();
+                        }
+                    }
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::fill_zero(vChannels[ch].vBuffer, to_do);
+                }
+                break;
+
+                case SAVING:
+                {
+                    if (pSaver->idle())
+                    {
+                        sSaveData.enSaveStatus = STATUS_LOADING;
+                        sSaveData.fSavePercent = 0.0f;
+                        update_saving_info();
+
+                        pExecutor->submit(pSaver);
+                    }
+                    else if (pSaver->completed())
+                    {
+                        update_saving_info();
+                        nState      = IDLE;
+                        pSaver->reset();
+                    }
+
+                    for (size_t ch = 0; ch < nChannels; ++ch)
+                        dsp::fill_zero(vChannels[ch].vBuffer, to_do);
+                }
+                break;
+            }
+        }
+
         void profiler::process(size_t samples)
         {
             // Bind audio ports
@@ -722,226 +946,7 @@ namespace lsp
             {
                 size_t to_do = (samples > TMP_BUF_SIZE) ? TMP_BUF_SIZE : samples;
 
-                switch (nState)
-                {
-                    case IDLE:
-                    {
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::fill_zero(vChannels[ch].vBuffer, to_do);
-                    }
-                    break;
-
-                    case CALIBRATION:
-                    {
-                        // Create one calibrator output sequence all, and copy it over the other channels
-                        if (nTriggers & T_CALIBRATION)
-                        {
-                            sCalOscillator.process_overwrite(vTempBuffer, to_do);
-                        }
-                        else
-                        {
-                            dsp::fill_zero(vTempBuffer, to_do);
-                            // This state transition is here, instead than in update_settings(), to avoid
-                            // forcing IDLE every time the calibrator is found off (which could happen during system test
-                            // if a control is moved).
-                            nState  = IDLE;
-                        }
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::copy(vChannels[ch].vBuffer, vTempBuffer, to_do);
-                    }
-                    break;
-
-                    case LATENCYDETECTION:
-                    {
-                        // Transition to next states only if all latency detectors have finished the job
-                        bool bAllMeasured = true;
-                        bool bAllComplete = true;
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                        {
-                            channel_t *c = &vChannels[ch];
-
-                            c->sLatencyDetector.process_in(c->vBuffer, c->vIn, to_do);
-
-                            if (!(nTriggers & T_FEEDBACK))
-                                dsp::fill_zero(c->vBuffer, to_do);
-
-                            c->sLatencyDetector.process_out(c->vBuffer, c->vBuffer, to_do);
-                            dsp::mul_k2(c->vBuffer, fLtAmplitude, to_do);
-
-                            if (c->sLatencyDetector.latency_detected())
-                            {
-                                c->bLatencyMeasured = true;
-                                c->bLCycleComplete  = true;
-                                c->nLatency         = c->sLatencyDetector.get_latency_samples();
-
-                                c->pLatencyScreen->set_value(c->sLatencyDetector.get_latency_seconds() * 1000.0f); // * 1000.0f to show ms instead of s
-                                c->sResponseTaker.set_latency_samples(c->nLatency);
-                                c->sLatencyDetector.reset_capture();
-                            }
-                            else if (c->sLatencyDetector.cycle_complete())
-                            {
-                                c->bLatencyMeasured = false;
-                                c->bLCycleComplete  = true;
-                                c->nLatency         = 0;
-                                c->sLatencyDetector.reset_capture();
-                            }
-
-                            bAllMeasured = bAllMeasured && vChannels[ch].bLatencyMeasured;
-                            bAllComplete = bAllComplete && vChannels[ch].bLCycleComplete;
-                        }
-
-                        if (bAllMeasured)
-                        {
-                            nState              = (bDoLatencyOnly) ? IDLE : PREPROCESSING;
-                            bDoLatencyOnly      = false;
-                        }
-                        else if (bAllComplete)
-                        {
-                            nState              = IDLE;
-                        }
-
-                        nWaitCounter           -= to_do;
-                    }
-                    break;
-
-                    case PREPROCESSING:
-                    {
-                        // Check task state. If needed (first time we get here after state transition) submit the
-                        // task.
-                        if (pPreProcessor->idle())
-                            pExecutor->submit(pPreProcessor);
-                        else if (pPreProcessor->completed()) // Advance machine status only if when (and if) the pre processing task is completed
-                        {
-                            nState = (pPreProcessor->successful()) ? WAIT : IDLE;
-                            if (nState == WAIT)
-                                update_pre_processing_info();
-
-                            pPreProcessor->reset();
-                        }
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::fill_zero(vChannels[ch].vBuffer, to_do);
-
-                        nWaitCounter   -= to_do;
-                    }
-                    break;
-
-                    case WAIT:
-                    {
-                        if (nWaitCounter <= 0)
-                        {
-                            bIRMeasured = false;
-                            nState      = RECORDING;
-
-                            for (size_t ch = 0; ch < nChannels; ++ch)
-                            {
-                                vChannels[ch].sResponseTaker.start_capture();
-                                vChannels[ch].bRCycleComplete = false;
-                            }
-                        }
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::fill_zero(vChannels[ch].vBuffer, to_do);
-
-                        nWaitCounter   -= to_do;
-                    }
-                    break;
-
-                    case RECORDING:
-                    {
-                        bool bAllComplete = true;
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                        {
-                            channel_t *c = &vChannels[ch];
-
-                            c->sResponseTaker.process_in(c->vBuffer, c->vIn, to_do);
-
-                            if (!(nTriggers & T_FEEDBACK))
-                                dsp::fill_zero(c->vBuffer, to_do);
-
-                            c->sResponseTaker.process_out(c->vBuffer, c->vBuffer, to_do);
-
-                            if (c->sResponseTaker.cycle_complete())
-                            {
-                                c->bRCycleComplete = true;
-                                c->sResponseTaker.reset_capture();
-                            }
-
-                            bAllComplete = bAllComplete && c->bRCycleComplete;
-                        }
-
-                        if (bAllComplete)
-                            nState = CONVOLVING;
-                    }
-                    break;
-
-                    case CONVOLVING:
-                    {
-                        if (pConvolver->idle())
-                            pExecutor->submit(pConvolver);
-                        else if (pConvolver->completed())
-                        {
-                            bIRMeasured = true;
-                            pConvolver->reset();
-                            nState = POSTPROCESSING;
-                        }
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::fill_zero(vChannels[ch].vBuffer, to_do);
-                    }
-                    break;
-
-                    case POSTPROCESSING:
-                    {
-                        if (pPostProcessor->idle())
-                        {
-                            ssize_t nIROffset = dspu::millis_to_samples(nSampleRate, pIROffset->value());
-                            pPostProcessor->set_ir_offset(nIROffset);
-                            pSaver->set_ir_offset(nIROffset); // We set it here also for the saver, so that it matches the postprocessing value.
-                            pPostProcessor->set_rt_algo(get_rt_algorithm(pRTAlgoSelector->value()));
-                            pExecutor->submit(pPostProcessor);
-                        }
-                        else if (pPostProcessor->completed())
-                        {
-                            // We should loop until the output mesh is committed to UI
-                            if (update_post_processing_info())
-                            {
-                                bIRMeasured = true;
-                                nState      = IDLE;
-                                pPostProcessor->reset();
-                            }
-                        }
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::fill_zero(vChannels[ch].vBuffer, to_do);
-                    }
-                    break;
-
-                    case SAVING:
-                    {
-                        if (pSaver->idle())
-                        {
-                            sSaveData.enSaveStatus = STATUS_LOADING;
-                            sSaveData.fSavePercent = 0.0f;
-                            update_saving_info();
-
-                            pExecutor->submit(pSaver);
-                        }
-                        else if (pSaver->completed())
-                        {
-                            update_saving_info();
-                            nState      = IDLE;
-                            pSaver->reset();
-                        }
-
-                        for (size_t ch = 0; ch < nChannels; ++ch)
-                            dsp::fill_zero(vChannels[ch].vBuffer, to_do);
-                    }
-                    break;
-                }
+                process_buffer(to_do);
 
                 for (size_t ch = 0; ch < nChannels; ++ch)
                 {

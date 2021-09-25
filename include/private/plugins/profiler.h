@@ -261,6 +261,7 @@ namespace lsp
                 void                        reset_tasks();
                 bool                        update_post_processing_info();
                 void                        update_saving_info();
+                void                        process_buffer(size_t to_do);
 
             public:
                 explicit profiler(const meta::plugin_t *metadata, size_t channels);
