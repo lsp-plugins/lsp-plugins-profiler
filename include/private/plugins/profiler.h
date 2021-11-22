@@ -267,7 +267,7 @@ namespace lsp
                 explicit profiler(const meta::plugin_t *metadata, size_t channels);
                 virtual ~profiler();
 
-                virtual void        init(plug::IWrapper *wrapper);
+                virtual void        init(plug::IWrapper *wrapper, plug::IPort **ports);
                 virtual void        destroy();
 
             public:

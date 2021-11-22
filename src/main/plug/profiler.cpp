@@ -473,9 +473,9 @@ namespace lsp
             }
         }
 
-        void profiler::init(plug::IWrapper *wrapper)
+        void profiler::init(plug::IWrapper *wrapper, plug::IPort **ports)
         {
-            plug::Module::init(wrapper);
+            plug::Module::init(wrapper, ports);
 
             pExecutor = wrapper->executor();
             lsp_trace("Executor = %p", pExecutor);
@@ -597,70 +597,70 @@ namespace lsp
             lsp_trace("Binding audio ports");
             for (size_t ch = 0; ch < nChannels; ++ch)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pIn = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pIn = ports[port_id++];
             }
             for (size_t ch = 0; ch < nChannels; ++ch)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pOut = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pOut = ports[port_id++];
             }
 
             // Common
             lsp_trace("Binding common ports");
-            pBypass             = vPorts[port_id++];
+            pBypass             = ports[port_id++];
 
-            pStateLEDs          = vPorts[port_id++];
+            pStateLEDs          = ports[port_id++];
 
-            pCalFrequency       = vPorts[port_id++];
-            pCalAmplitude       = vPorts[port_id++];
-            pCalSwitch          = vPorts[port_id++];
-            pFeedback           = vPorts[port_id++];
+            pCalFrequency       = ports[port_id++];
+            pCalAmplitude       = ports[port_id++];
+            pCalSwitch          = ports[port_id++];
+            pFeedback           = ports[port_id++];
 
-            pLdMaxLatency       = vPorts[port_id++];
-            pLdPeakThs          = vPorts[port_id++];
-            pLdAbsThs           = vPorts[port_id++];
-            pLdEnableSwitch     = vPorts[port_id++];
-            pLatTrigger         = vPorts[port_id++];
+            pLdMaxLatency       = ports[port_id++];
+            pLdPeakThs          = ports[port_id++];
+            pLdAbsThs           = ports[port_id++];
+            pLdEnableSwitch     = ports[port_id++];
+            pLatTrigger         = ports[port_id++];
 
-            pDuration           = vPorts[port_id++];
-            pActualDuration     = vPorts[port_id++];
-            pLinTrigger         = vPorts[port_id++];
+            pDuration           = ports[port_id++];
+            pActualDuration     = ports[port_id++];
+            pLinTrigger         = ports[port_id++];
 
-            pIROffset           = vPorts[port_id++];
-            pRTAlgoSelector     = vPorts[port_id++];
-            pPostTrigger        = vPorts[port_id++];
+            pIROffset           = ports[port_id++];
+            pRTAlgoSelector     = ports[port_id++];
+            pPostTrigger        = ports[port_id++];
 
-            pSaveModeSelector   = vPorts[port_id++];
-            pIRFileName         = vPorts[port_id++];
-            pIRSaveCmd          = vPorts[port_id++];
-            pIRSaveStatus       = vPorts[port_id++];
-            pIRSavePercent      = vPorts[port_id++];
+            pSaveModeSelector   = ports[port_id++];
+            pIRFileName         = ports[port_id++];
+            pIRSaveCmd          = ports[port_id++];
+            pIRSaveStatus       = ports[port_id++];
+            pIRSavePercent      = ports[port_id++];
 
             // Data Visualisation
             lsp_trace("Binding data visualisation ports");
 
             for (size_t ch = 0; ch < nChannels; ++ch)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pLevelMeter       = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pLevelMeter       = ports[port_id++];
 
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pLatencyScreen    = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pLatencyScreen    = ports[port_id++];
 
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pRTScreen         = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pRTAccuracyLed    = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pRTScreen         = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pRTAccuracyLed    = ports[port_id++];
 
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pILScreen         = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pILScreen         = ports[port_id++];
 
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pRScreen          = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pRScreen          = ports[port_id++];
 
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[ch].pResultMesh       = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[ch].pResultMesh       = ports[port_id++];
             }
         }
 
