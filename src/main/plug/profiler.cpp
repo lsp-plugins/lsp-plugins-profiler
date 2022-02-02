@@ -923,8 +923,8 @@ namespace lsp
             {
                 // Accept new file name
                 path->accept();
-                lsp_trace("set file name to %s", path->get_path());
-                pSaver->set_file_name(path->get_path());
+                lsp_trace("set file name to %s", path->path());
+                pSaver->set_file_name(path->path());
 
                 // Commit
                 path->commit();
