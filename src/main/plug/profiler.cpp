@@ -565,7 +565,7 @@ namespace lsp
             lsp_guard_assert(size_t *sRDsave = sRDptr);
             sResponseData.vOffsets  = sRDptr;
             sRDptr                 += nChannels;
-            lsp_assert(sRDptr <= &sRDsave[nChannels])
+            lsp_assert(sRDptr <= &sRDsave[nChannels]);
 
             if (!sCalOscillator.init())
                 return;
