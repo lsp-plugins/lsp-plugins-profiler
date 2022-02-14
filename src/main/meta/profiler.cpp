@@ -142,6 +142,15 @@ namespace lsp
             PORTS_END
         };
 
+        const meta::bundle_t profiler_bundle =
+        {
+            "profiler",
+            "Profiler",
+            B_UTILITIES,
+            "kXCBRnJL_qo",
+            "A simple plugin for audio systems profiling. The profiling is performed by\nan algorithm based on the Synchronized Swept Sine method by Antonin Novak.\nThe profiler plugin allows to profile audio systems. These properties of an\naudio system can be currently profiled: Latency, Linear Impulse Response,\nNonlinear Characteristics."
+        };
+
         const meta::plugin_t profiler_mono =
         {
             "Profiler Mono",
@@ -160,7 +169,8 @@ namespace lsp
             profiler_mono_ports,
             "util/profiler/mono.xml",
             NULL,
-            mono_plugin_port_groups
+            mono_plugin_port_groups,
+            &profiler_bundle
         };
 
         const meta::plugin_t profiler_stereo =
@@ -181,7 +191,8 @@ namespace lsp
             profiler_stereo_ports,
             "util/profiler/stereo.xml",
             NULL,
-            stereo_plugin_port_groups
+            stereo_plugin_port_groups,
+            &profiler_bundle
         };
     } // namespace meta
 } // namespace lsp
