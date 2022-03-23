@@ -1,0 +1,7 @@
+{
+	"profiler": {
+		"name": "Profiler",
+		"description": "A simple plugin for audio systems profiling. The profiling is performed by\nan algorithm based on the Synchronized Swept Sine method by Antonin Novak.\nThe profiler plugin allows to profile audio systems. These properties of an\naudio system can be currently profiled: Latency, Linear Impulse Response,\nNonlinear Characteristics."
+	}
+}
+
