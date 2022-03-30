@@ -148,7 +148,7 @@ namespace lsp
             "Profiler",
             B_UTILITIES,
             "kXCBRnJL_qo",
-            "A simple plugin for audio systems profiling. The profiling is performed by\nan algorithm based on the Synchronized Swept Sine method by Antonin Novak.\nThe profiler plugin allows to profile audio systems. These properties of an\naudio system can be currently profiled: Latency, Linear Impulse Response,\nNonlinear Characteristics."
+            "A simple plugin for audio systems profiling. The profiling is performed by\nan algorithm based on the Synchronized Swept Sine method by Antonin Novak.\nThe profiler plugin allows one to profile audio systems. These properties of an\naudio system can be currently profiled: Latency, Linear Impulse Response,\nNonlinear Characteristics."
         };
 
         const meta::plugin_t profiler_mono =
