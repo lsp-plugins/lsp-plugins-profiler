@@ -52,7 +52,7 @@ namespace lsp
             { "Convolving",             "profiler.st.conv" },
             { "Postprocessing",         "profiler.st.post" },
             { "Saving",                 "profiler.st.save" },
-            NULL
+            { NULL,                     NULL }
         };
 
         static const port_item_t sc_rtalgo[] =
@@ -62,7 +62,7 @@ namespace lsp
             { "RT10",                   "profiler.algo.rt10" },
             { "RT20",                   "profiler.algo.rt20" },
             { "RT30",                   "profiler.algo.rt30" },
-            NULL
+            { NULL,                     NULL }
         };
 
         static const port_item_t sc_savemode[] =
@@ -72,7 +72,7 @@ namespace lsp
             { "LTI Coarse (*.wav)",     "profiler.fmt.lti_coarse" },
             { "LTI All (*.wav)",        "profiler.fmt.lti_all" },
             { "All Info (*.lspc)",      "profiler.fmt.all" },
-            NULL
+            { NULL,                     NULL }
         };
 
         #define CALIBRATOR \
