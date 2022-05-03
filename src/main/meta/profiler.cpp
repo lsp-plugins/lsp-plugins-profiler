@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       1
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       2
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -52,7 +52,7 @@ namespace lsp
             { "Convolving",             "profiler.st.conv" },
             { "Postprocessing",         "profiler.st.post" },
             { "Saving",                 "profiler.st.save" },
-            NULL
+            { NULL,                     NULL }
         };
 
         static const port_item_t sc_rtalgo[] =
@@ -62,7 +62,7 @@ namespace lsp
             { "RT10",                   "profiler.algo.rt10" },
             { "RT20",                   "profiler.algo.rt20" },
             { "RT30",                   "profiler.algo.rt30" },
-            NULL
+            { NULL,                     NULL }
         };
 
         static const port_item_t sc_savemode[] =
@@ -72,7 +72,7 @@ namespace lsp
             { "LTI Coarse (*.wav)",     "profiler.fmt.lti_coarse" },
             { "LTI All (*.wav)",        "profiler.fmt.lti_all" },
             { "All Info (*.lspc)",      "profiler.fmt.all" },
-            NULL
+            { NULL,                     NULL }
         };
 
         #define CALIBRATOR \
@@ -148,7 +148,7 @@ namespace lsp
             "Profiler",
             B_UTILITIES,
             "kXCBRnJL_qo",
-            "A simple plugin for audio systems profiling. The profiling is performed by\nan algorithm based on the Synchronized Swept Sine method by Antonin Novak.\nThe profiler plugin allows to profile audio systems. These properties of an\naudio system can be currently profiled: Latency, Linear Impulse Response,\nNonlinear Characteristics."
+            "A simple plugin for audio systems profiling. The profiling is performed by\nan algorithm based on the Synchronized Swept Sine method by Antonin Novak.\nThe profiler plugin allows one to profile audio systems. These properties of an\naudio system can be currently profiled: Latency, Linear Impulse Response,\nNonlinear Characteristics."
         };
 
         const meta::plugin_t profiler_mono =

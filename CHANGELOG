@@ -2,5 +2,12 @@
 * RECENT CHANGES
 *******************************************************************************
 
+=== 1.0.2 ===
+* Updated plugin metadata (contributed by Dennis Braun).
+* Fixed clang warnings.
+* Updated dependencies and build scripts.
+* Updated build scripts and dependencies.
+
 === 1.0.1 ===
 * Initial release.
+
