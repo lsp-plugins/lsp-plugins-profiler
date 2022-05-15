@@ -1,0 +1,7 @@
+{
+	"profiler": {
+		"name": "Profiler",
+		"description": "Ein simples Plugin, um Profile eines Audiosystems zu erstellen. \nDer Prozess wird durch einen Algorithmus durchgeführt, der auf der \n'Synchronized Swept Sine'-Methode von Antonin Novak basiert. \nDie Eigenschaften eines Audiosystems kann in folgende \nKategorien sortiert werden: Latenz, Lineare Impulsantwort und \nNonlineare Charakteristika."
+	}
+}
+
