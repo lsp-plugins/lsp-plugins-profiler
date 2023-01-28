@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       5
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       6
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -39,7 +39,9 @@ namespace lsp
 {
     namespace meta
     {
-        static const int profiler_classes[] = { C_UTILITY, -1};
+        static const int plugin_classes[]           = { C_UTILITY, -1};
+        static const int clap_features_mono[]       = { CF_AUDIO_EFFECT, CF_UTILITY, CF_MONO, -1 };
+        static const int clap_features_stereo[]     = { CF_AUDIO_EFFECT, CF_UTILITY, CF_STEREO, -1 };
 
         static const port_item_t profiler_states[] =
         {
@@ -163,8 +165,10 @@ namespace lsp
             "hwrc",
             0,
             NULL,
+            LSP_CLAP_URI("profiler_mono"),
             LSP_PLUGINS_PROFILER_VERSION,
-            profiler_classes,
+            plugin_classes,
+            clap_features_mono,
             E_DUMP_STATE,
             profiler_mono_ports,
             "util/profiler/mono.xml",
@@ -185,8 +189,10 @@ namespace lsp
             "hubw",
             0,
             NULL,
+            LSP_CLAP_URI("profiler_stereo"),
             LSP_PLUGINS_PROFILER_VERSION,
-            profiler_classes,
+            plugin_classes,
+            clap_features_stereo,
             E_DUMP_STATE,
             profiler_stereo_ports,
             "util/profiler/stereo.xml",
@@ -194,5 +200,5 @@ namespace lsp
             stereo_plugin_port_groups,
             &profiler_bundle
         };
-    } // namespace meta
-} // namespace lsp
+    } /* namespace meta */
+} /* namespace lsp */
