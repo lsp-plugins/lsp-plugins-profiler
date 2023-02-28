@@ -19,11 +19,13 @@
  * along with lsp-plugins-profiler. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <private/plugins/profiler.h>
 #include <lsp-plug.in/common/alloc.h>
+#include <lsp-plug.in/common/debug.h>
 #include <lsp-plug.in/dsp/dsp.h>
 #include <lsp-plug.in/dsp-units/units.h>
 #include <lsp-plug.in/stdlib/math.h>
+
+#include <private/plugins/profiler.h>
 
 #define TMP_BUF_SIZE                1024
 #define BGNOISE_INTERVAL_FACTOR     2.0f    /* Multiply reactivity by this to calculate the time to spend in BGNOISEPROFILING state */
