@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2023 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2023 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-profiler
  * Created on: 3 авг. 2021 г.
@@ -335,9 +335,16 @@ namespace lsp
 
         profiler::~profiler()
         {
+            do_destroy();
         }
 
         void profiler::destroy()
+        {
+            plug::Module::destroy();
+            do_destroy();
+        }
+
+        void profiler::do_destroy()
         {
             if (pPreProcessor != NULL)
             {
@@ -419,20 +426,23 @@ namespace lsp
 
             for (size_t ch = 0; ch < nChannels; ++ch)
             {
-                vChannels[ch].pRTScreen->set_value(vChannels[ch].sPostProc.fReverbTime);
-                vChannels[ch].pRScreen->set_value(vChannels[ch].sPostProc.fCorrCoeff);
-                vChannels[ch].pILScreen->set_value(vChannels[ch].sPostProc.fIntgLimit);
-                vChannels[ch].pRTAccuracyLed->set_value(vChannels[ch].sPostProc.bRTAccuray);
+                channel_t *c = &vChannels[ch];
+
+                c->pRTScreen->set_value(c->sPostProc.fReverbTime);
+                c->pRScreen->set_value(c->sPostProc.fCorrCoeff);
+                c->pILScreen->set_value(c->sPostProc.fIntgLimit);
+                c->pRTAccuracyLed->set_value((c->sPostProc.bRTAccuray) ? 1.0f : 0.0f);
             }
 
             // Do the plots
             for (size_t ch = 0; ch < nChannels; ++ch)
             {
-                size_t irQuery = (nIROffset > 0) ? vChannels[ch].sPostProc.nReverbTime : vChannels[ch].sPostProc.nReverbTime + size_t(-nIROffset);
+                channel_t *c = &vChannels[ch];
+                size_t irQuery = (nIROffset > 0) ? c->sPostProc.nReverbTime : c->sPostProc.nReverbTime + size_t(-nIROffset);
 
                 sSyncChirpProcessor.get_convolution_result_plottable_samples(ch, vDisplayOrdinate, nIROffset, irQuery , meta::profiler_metadata::RESULT_MESH_SIZE, true);
 
-                plug::mesh_t *mesh = vChannels[ch].pResultMesh->buffer<plug::mesh_t>();
+                plug::mesh_t *mesh = c->pResultMesh->buffer<plug::mesh_t>();
                 if (mesh != NULL)
                 {
                     if (!mesh->isEmpty())
@@ -544,7 +554,6 @@ namespace lsp
 
                 c->pLevelMeter      = NULL;
                 c->pLatencyScreen   = NULL;
-                c->pRTScreen        = NULL;
                 c->pRTScreen        = NULL;
                 c->pRTAccuracyLed   = NULL;
                 c->pILScreen        = NULL;
@@ -1316,7 +1325,7 @@ namespace lsp
             v->write("pIRSavePercent", pIRSavePercent);
         }
 
-    } // namespace plugins
-} // namespace lsp
+    } /* namespace plugins */
+} /* namespace lsp */
 
 
