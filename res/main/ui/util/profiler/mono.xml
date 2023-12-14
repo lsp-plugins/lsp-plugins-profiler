@@ -128,8 +128,24 @@
 						<cell rows="2" pad.r="6" pad.v="4">
 							<align halign="1" valign="-1">
 								<vbox >
-									<save id="irfn" command.id="irfc" progress.id="irfp" status=":irfs" path.id="_ui_dlg_ir_path" bg.color="bg_schema" format="wav" visibility="(:scsv != 4)"/>
-									<save id="irfn" command.id="irfc" progress.id="irfp" status=":irfs" path.id="_ui_dlg_ir_path" bg.color="bg_schema" format="lspc" visibility="(:scsv == 4)"/>
+									<save
+										id="irfn"
+										command.id="irfc"
+										progress.id="irfp"
+										status=":irfs"
+										path.id="_ui_dlg_ir_path"
+										bg.color="bg_schema"
+										format="wav"
+										visibility="(:scsv != 4)"/>
+									<save
+										id="irfn"
+										command.id="irfc"
+										progress.id="irfp"
+										status=":irfs"
+										path.id="_ui_dlg_ir_path"
+										bg.color="bg_schema"
+										format="lspc"
+										visibility="(:scsv == 4)"/>
 								</vbox>
 							</align>
 						</cell>

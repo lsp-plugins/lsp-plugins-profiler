@@ -1,123 +1,115 @@
 <plugin resizable="true">
 	<vbox spacing="4">
-
-
-<group text="groups.results" expand="true" fill="true" ipadding="0">
-		<grid rows="3" cols="3">
-			<group ui:inject="GraphGroup" ipadding="0" expand="true" fill="true" text.show="false" pad.t="4" bg.color="bg">
-				<graph width.min="512" height.min="220" expand="true" fill="true">
-				<origin hpos="-1.0" vpos="0.0" visible="false"/>
-				<origin hpos="-1.0" vpos="0.5" visible="false"/>
-				<origin hpos="-1.0" vpos="-0.5" visible="false"/>
-
-				<!-- Grid -->
-				<ui:with color="graph_alt_1">
-					<ui:for id="g" first="-7" last="7" step="2">
-						<marker v="${:g * 0.25}" ox="1" oy="0"/>
-					</ui:for>
-					<ui:for id="t" first="1" last="7" step="2">
-						<marker v="${:t * 0.25}"/>
-					</ui:for>
-				</ui:with>
-				<ui:with color="graph_sec">
-					<marker v="-1.50" ox="1" oy="0"/>
-					<marker v="-0.50" ox="1" oy="0"/>
-					<marker v="0.50" ox="1" oy="0"/>
-					<marker v="1.50" ox="1" oy="0"/>
-					<marker v="0.5"/>
-					<marker v="1.5"/>
-				</ui:with>
-				<ui:with color="graph_prim">
-					<marker v="-1.00" ox="1" oy="0" />
-					<marker v="1.00" ox="1" oy="0"/>
-					<marker v="1" />
-				</ui:with>
-
-				<axis min="0" max="2.0" angle="0.0" log="false"/>
-				<axis min="-2.0" max="2.0" angle="0.5" log="false"/>
-
-				<!-- Meshes -->
-				<mesh id="rme_l" o="1" width="3" color="left" smooth="true"/>
-				<mesh id="rme_r" o="2" width="3" color="right" smooth="true"/>
-
-				<!-- Text -->
-				<ui:with y="-2" halign="-1" valign="1" pad.h="4">
-					<text x="0" text="graph.axis.reverb_time" halign="1"/>
-					<text x="0.5" text="0.25"/>
-					<text x="1" text="0.5"/>
-					<text x="1.5" text="0.75"/>
-					<text x="2" text="1.0"/>
-				</ui:with>
-				<ui:with x="0" halign="1" valign="-1" pad.h="4">
-					<text y="2" text="graph.axis.chan.left" color="left"/>
-					<text y="1.5" text="0.5"/>
-					<text y="1" text="0"/>
-					<text y="0.5" text="-0.5"/>
-
-					<text y="0" text="graph.axis.chan.right" color="right"/>
-					<text y="-0.5" text="0.5"/>
-					<text y="-1" text="0"/>
-					<text y="-1.5" text="-0.5"/>
-				</ui:with>
-			</graph>
-		</group>
+		<group text="groups.results" expand="true" fill="true" ipadding="0">
+			<grid rows="3" cols="3">
+				<group ui:inject="GraphGroup" ipadding="0" expand="true" fill="true" text.show="false" pad.t="4" bg.color="bg">
+					<graph width.min="512" height.min="220" expand="true" fill="true">
+						<origin hpos="-1.0" vpos="0.0" visible="false"/>
+						<origin hpos="-1.0" vpos="0.5" visible="false"/>
+						<origin hpos="-1.0" vpos="-0.5" visible="false"/>
+		
+						<!-- Grid -->
+						<ui:with color="graph_alt_1">
+							<ui:for id="g" first="-7" last="7" step="2">
+								<marker v="${:g * 0.25}" ox="1" oy="0"/>
+							</ui:for>
+							<ui:for id="t" first="1" last="7" step="2">
+								<marker v="${:t * 0.25}"/>
+							</ui:for>
+						</ui:with>
+						<ui:with color="graph_sec">
+							<marker v="-1.50" ox="1" oy="0"/>
+							<marker v="-0.50" ox="1" oy="0"/>
+							<marker v="0.50" ox="1" oy="0"/>
+							<marker v="1.50" ox="1" oy="0"/>
+							<marker v="0.5"/>
+							<marker v="1.5"/>
+						</ui:with>
+						<ui:with color="graph_prim">
+							<marker v="-1.00" ox="1" oy="0" />
+							<marker v="1.00" ox="1" oy="0"/>
+							<marker v="1" />
+						</ui:with>
+		
+						<axis min="0" max="2.0" angle="0.0" log="false"/>
+						<axis min="-2.0" max="2.0" angle="0.5" log="false"/>
+		
+						<!-- Meshes -->
+						<mesh id="rme_l" o="1" width="3" color="left" smooth="true"/>
+						<mesh id="rme_r" o="2" width="3" color="right" smooth="true"/>
+		
+						<!-- Text -->
+						<ui:with y="-2" halign="-1" valign="1" pad.h="4">
+							<text x="0" text="graph.axis.reverb_time" halign="1"/>
+							<text x="0.5" text="0.25"/>
+							<text x="1" text="0.5"/>
+							<text x="1.5" text="0.75"/>
+							<text x="2" text="1.0"/>
+						</ui:with>
+						<ui:with x="0" halign="1" valign="-1" pad.h="4">
+							<text y="2" text="graph.axis.chan.left" color="left"/>
+							<text y="1.5" text="0.5"/>
+							<text y="1" text="0"/>
+							<text y="0.5" text="-0.5"/>
+		
+							<text y="0" text="graph.axis.chan.right" color="right"/>
+							<text y="-0.5" text="0.5"/>
+							<text y="-1" text="0"/>
+							<text y="-1.5" text="-0.5"/>
+						</ui:with>
+					</graph>
+				</group>
 
 				<void width="4" bg.color="bg" hreduce="true"/>
-
-
-			<grid rows="11" cols="2" transpose="true" >
-				<void height="4" vreduce="true" bg.color="bg"/>
-
-				<ui:for id="i" first="0" last="8">
-					<led id="stld" key="${i}" pad.h="6" size="10" bg.bright="(:stld ieq ${i}) ? 1.0 : :const_bg_darken"/>
-				</ui:for>
-				<hsep vreduce="true" />
-
-				<void height="4" vreduce="true" bg.color="bg"/>
-
-				<ui:with hfill="true" text.halign="-1" pad.h="6" >
-					<label text="labels.prof.idle" bright="(:stld ieq 0) ? 1 : 0.65"  bg.bright="(:stld ieq 0) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.calibrating" bright="(:stld ieq 1) ? 1 : 0.65" bg.bright="(:stld ieq 1) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.detecting_latency" bright="(:stld ieq 2) ? 1 : 0.65" bg.bright="(:stld ieq 2) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.preprocessing" bright="(:stld ieq 3) ? 1 : 0.65" bg.bright="(:stld ieq 3) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.waiting" bright="(:stld ieq 4) ? 1 : 0.65" bg.bright="(:stld ieq 4) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.recording" bright="(:stld ieq 5) ? 1 : 0.65" bg.bright="(:stld ieq 5) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.convolving" bright="(:stld ieq 6) ? 1 : 0.65" bg.bright="(:stld ieq 6) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.postprocessing" bright="(:stld ieq 7) ? 1 : 0.65" bg.bright="(:stld ieq 7) ? 1.0 : :const_bg_darken"/>
-					<label text="labels.prof.saving" bright="(:stld ieq 8) ? 1 : 0.65" bg.bright="(:stld ieq 8) ? 1.0 : :const_bg_darken"/>
-				</ui:with>
-				<hsep vreduce="true" />
-
-			</grid>
-
+	
+				<grid rows="11" cols="2" transpose="true" >
+					<void height="4" vreduce="true" bg.color="bg"/>
+	
+					<ui:for id="i" first="0" last="8">
+						<led id="stld" key="${i}" pad.h="6" size="10" bg.bright="(:stld ieq ${i}) ? 1.0 : :const_bg_darken"/>
+					</ui:for>
+					<hsep vreduce="true" />
+	
+					<void height="4" vreduce="true" bg.color="bg"/>
+	
+					<ui:with hfill="true" text.halign="-1" pad.h="6" >
+						<label text="labels.prof.idle" bright="(:stld ieq 0) ? 1 : 0.65"  bg.bright="(:stld ieq 0) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.calibrating" bright="(:stld ieq 1) ? 1 : 0.65" bg.bright="(:stld ieq 1) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.detecting_latency" bright="(:stld ieq 2) ? 1 : 0.65" bg.bright="(:stld ieq 2) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.preprocessing" bright="(:stld ieq 3) ? 1 : 0.65" bg.bright="(:stld ieq 3) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.waiting" bright="(:stld ieq 4) ? 1 : 0.65" bg.bright="(:stld ieq 4) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.recording" bright="(:stld ieq 5) ? 1 : 0.65" bg.bright="(:stld ieq 5) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.convolving" bright="(:stld ieq 6) ? 1 : 0.65" bg.bright="(:stld ieq 6) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.postprocessing" bright="(:stld ieq 7) ? 1 : 0.65" bg.bright="(:stld ieq 7) ? 1.0 : :const_bg_darken"/>
+						<label text="labels.prof.saving" bright="(:stld ieq 8) ? 1 : 0.65" bg.bright="(:stld ieq 8) ? 1.0 : :const_bg_darken"/>
+					</ui:with>
+					<hsep vreduce="true" />
+	
+				</grid>
+	
 				<cell cols="3"><void height="4" bg.color="bg" vreduce="true"/></cell>
-
-
-
-
-
-			<cell cols="3">
-
-				<grid rows="3" cols="11" transpose="true">
-<!-- c1 -->
-					<label text="labels.reverberation_time:s" pad.t="4"/>
-					<indicator id="rti_l" format="f6.3!" tcolor="left" fill="false"/>
-					<indicator id="rti_r" format="f6.3!" tcolor="right" fill="false" pad.b="4"/>
-<!-- c2 -->
-					<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
-<!-- c3 -->
-					<label text="labels.energy_decay_linear_correlation" pad.t="4"/>
+	
+				<cell cols="3">
+					<grid rows="3" cols="11" transpose="true">
+						<!-- c1 -->
+						<label text="labels.reverberation_time:s" pad.t="4"/>
+						<indicator id="rti_l" format="f6.3!" tcolor="left" fill="false"/>
+						<indicator id="rti_r" format="f6.3!" tcolor="right" fill="false" pad.b="4"/>
+						<!-- c2 -->
+						<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+						<!-- c3 -->
+						<label text="labels.energy_decay_linear_correlation" pad.t="4"/>
 						<indicator id="rci_l" format="f6.3!" tcolor="left" fill="false"/>
 						<indicator id="rci_r" format="f6.3!" tcolor="right" fill="false" pad.b="4"/>
-<!-- c4 -->
+						<!-- c4 -->
 						<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
-<!-- c5 -->
-					<label text="labels.coarse_ir_duration" pad.t="4"/>
+						<!-- c5 -->
+						<label text="labels.coarse_ir_duration" pad.t="4"/>
 						<indicator id="ili_l" format="f6.3!" tcolor="left" fill="false"/>
 						<indicator id="ili_r" format="f6.3!" tcolor="right" fill="false" pad.b="4"/>
-<!-- c6 -->
+						<!-- c6 -->
 						<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
-<!-- c7 -->
+						<!-- c7 -->
 						<label text="labels.offset" />
 						<hbox fill="false" pad.h="6">
 							<knob id="offc" size="18"/>
@@ -135,112 +127,121 @@
 							<label text="labels.noise_floor_right" width.min="91" color="red" visibility="(:rta_l ieq 0) and (:rta_r ine 0)"/>
 							</vbox>
 						</hbox>
-<!-- c8 -->
+						<!-- c8 -->
 						<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
-<!-- c9 -->
-
-
-<cell cols="2" ><button id="post" height="19" ui:inject="Button_yellow" pad.l="6" hfill="true" text="actions.postprocess"/></cell>
-<label text="labels.prof.rt_algorithm" fill="true" pad.l="6" text.halign="-1"/>
-<combo id="scra" fill="true" pad.l="6" pad.b="4"/>
-
-<!-- c10 -->
-<label text="labels.save_mode" fill="true" pad.h="6" text.halign="-1" />
-<cell cols="2" pad.h="6" pad.b="4"><combo fill="true" id="scsv"/></cell>
-
-<!-- c11 -->
-<cell rows="2" pad.r="6" pad.v="4">
-	<align halign="1" valign="-1">
-		<vbox >
-		<save id="irfn" command.id="irfc" progress.id="irfp" status=":irfs" path.id="_ui_dlg_ir_path" bg.color="bg_schema" format="wav" visibility="(:scsv != 4)"/>
-		<save id="irfn" command.id="irfc" progress.id="irfp" status=":irfs" path.id="_ui_dlg_ir_path" bg.color="bg_schema" format="lspc" visibility="(:scsv == 4)"/>
-	</vbox>
-</align>
-</cell>
-
-</grid>
-</cell>
-
-</grid>
-	</group>
-
-
-<hbox spacing="4">
-	<group text="groups.plug.calibrator" ipadding="0">
-		<grid rows="4" cols="4">
-			<label text="labels.frequency" pad.h="6" pad.v="4" vreduce="true"/>
-			<label text="labels.amplitude" pad.h="6" pad.v="4" vreduce="true" />
-			<cell rows="2"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
-			<cell rows="2">
-				<vbox fill="false" spacing="4" pad.h="6">
-				<button id="cals" text="labels.enable" ui:inject="Button_cyan" height="19" width="58" fill="true"/>
-				<button id="fbck" text="labels.feedback" ui:inject="Button_yellow" height="19" width="58" fill="true"/>
-			</vbox>
-		</cell>
-
-		<hbox fill="false" pad.h="6" expand="true"><knob id="calf" expand="true"/>
-		<value id="calf"  pad.l="4" width.min="32"/></hbox>
-		<hbox fill="false" pad.h="6" expand="true"><knob id="cala" expand="true"/>
-		<value id="cala" pad.l="4" width.min="32"/></hbox>
-
-		<cell cols="4"><void height="4" bg.color="bg" vreduce="true"/></cell>
-
-		<cell cols="4">
-			<hbox>
-				<label text="labels.chan.in" pad.l="6"/>
-				<ledmeter hexpand="true" angle="0" height.min="192" fill="true">
-					<ledchannel id="ilv_l" min="-72 db" max="12 db" log="true" type="rms_peak" peak.visibility="true" value.color="left" />
-					<ledchannel id="ilv_r" min="-72 db" max="12 db" log="true" type="rms_peak" peak.visibility="true" value.color="right" />
-				</ledmeter>
-			</hbox>
-		</cell>
-	</grid>
-</group>
-
-<group text="groups.plug.latency_detector" ipadding="0">
-	<grid rows="4" cols="4">
-		<ui:with pad.h="6" pad.v="4" vreduce="true" hexpand="true">
-		<label text="labels.max_latency"/>
-		<label text="labels.signal.peak"/>
-		</ui:with>
-		<label text="labels.absolute_threshold" pad.l="6" pad.v="4" vreduce="true" hexpand="true"/>
-
-		<label text="labels.latency:ms" pad.h="6" pad.v="4" vreduce="true"/>
-
-		<cell rows="2" hexpand="true"><knob id="ltdm"/></cell>
-		<cell rows="2" hexpand="true"><knob id="ltdp"/></cell>
-		<cell rows="2" hexpand="true"><knob id="ltda"/></cell>
-		<indicator id="lti_l" format="f6.3!" tcolor="left" pad.b="4" fill="false"/>
-		<indicator id="lti_r" format="f6.3!" tcolor="right" fill="false"/>
-
-<ui:with pad.b="4" width.min="32">
-		<value id="ltdm"/>
-		<value id="ltdp"/>
-		<value id="ltda"/>
-	</ui:with>
-
-		<hbox spacing="4" fill="false" pad.h="6">
-			<button id="ltena" text="labels.enable" ui:inject="Button_cyan" size="19"/>
-		  <button id="latt" text="actions.measure" size="19" ui:inject="Button_yellow"/>
+						<!-- c9 -->
+						<cell cols="2" ><button id="post" height="19" ui:inject="Button_yellow" pad.l="6" hfill="true" text="actions.postprocess"/></cell>
+						<label text="labels.prof.rt_algorithm" fill="true" pad.l="6" text.halign="-1"/>
+						<combo id="scra" fill="true" pad.l="6" pad.b="4"/>
+						
+						<!-- c10 -->
+						<label text="labels.save_mode" fill="true" pad.h="6" text.halign="-1" />
+						<cell cols="2" pad.h="6" pad.b="4"><combo fill="true" id="scsv"/></cell>
+						
+						<!-- c11 -->
+						<cell rows="2" pad.r="6" pad.v="4">
+							<align halign="1" valign="-1">
+								<vbox>
+									<save
+										id="irfn"
+										command.id="irfc"
+										progress.id="irfp"
+										status=":irfs"
+										path.id="_ui_dlg_ir_path"
+										bg.color="bg_schema"
+										format="wav"
+										visibility="(:scsv != 4)"/>
+									<save
+										id="irfn"
+										command.id="irfc"
+										progress.id="irfp"
+										status=":irfs"
+										path.id="_ui_dlg_ir_path"
+										bg.color="bg_schema"
+										format="lspc"
+										visibility="(:scsv == 4)"/>
+								</vbox>
+							</align>
+						</cell>
+					</grid>
+				</cell>
+			</grid>
+		</group>
+	
+		<hbox spacing="4">
+			<group text="groups.plug.calibrator" ipadding="0">
+				<grid rows="4" cols="4">
+					<label text="labels.frequency" pad.h="6" pad.v="4" vreduce="true"/>
+					<label text="labels.amplitude" pad.h="6" pad.v="4" vreduce="true" />
+					<cell rows="2"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+					<cell rows="2">
+						<vbox fill="false" spacing="4" pad.h="6">
+							<button id="cals" text="labels.enable" ui:inject="Button_cyan" height="19" width="58" fill="true"/>
+							<button id="fbck" text="labels.feedback" ui:inject="Button_yellow" height="19" width="58" fill="true"/>
+						</vbox>
+					</cell>
+			
+					<hbox fill="false" pad.h="6" expand="true"><knob id="calf" expand="true"/>
+					<value id="calf"  pad.l="4" width.min="32"/></hbox>
+					<hbox fill="false" pad.h="6" expand="true"><knob id="cala" expand="true"/>
+					<value id="cala" pad.l="4" width.min="32"/></hbox>
+			
+					<cell cols="4"><void height="4" bg.color="bg" vreduce="true"/></cell>
+			
+					<cell cols="4">
+						<hbox>
+							<label text="labels.chan.in" pad.l="6"/>
+							<ledmeter hexpand="true" angle="0" height.min="192" fill="true">
+								<ledchannel id="ilv_l" min="-72 db" max="12 db" log="true" type="rms_peak" peak.visibility="true" value.color="left" />
+								<ledchannel id="ilv_r" min="-72 db" max="12 db" log="true" type="rms_peak" peak.visibility="true" value.color="right" />
+							</ledmeter>
+						</hbox>
+					</cell>
+				</grid>
+			</group>
+		
+			<group text="groups.plug.latency_detector" ipadding="0">
+				<grid rows="4" cols="4">
+					<ui:with pad.h="6" pad.v="4" vreduce="true" hexpand="true">
+					<label text="labels.max_latency"/>
+					<label text="labels.signal.peak"/>
+					</ui:with>
+					<label text="labels.absolute_threshold" pad.l="6" pad.v="4" vreduce="true" hexpand="true"/>
+			
+					<label text="labels.latency:ms" pad.h="6" pad.v="4" vreduce="true"/>
+			
+					<cell rows="2" hexpand="true"><knob id="ltdm"/></cell>
+					<cell rows="2" hexpand="true"><knob id="ltdp"/></cell>
+					<cell rows="2" hexpand="true"><knob id="ltda"/></cell>
+					<indicator id="lti_l" format="f6.3!" tcolor="left" pad.b="4" fill="false"/>
+					<indicator id="lti_r" format="f6.3!" tcolor="right" fill="false"/>
+			
+					<ui:with pad.b="4" width.min="32">
+						<value id="ltdm"/>
+						<value id="ltdp"/>
+						<value id="ltda"/>
+					</ui:with>
+			
+					<hbox spacing="4" fill="false" pad.h="6">
+						<button id="ltena" text="labels.enable" ui:inject="Button_cyan" size="19"/>
+					  <button id="latt" text="actions.measure" size="19" ui:inject="Button_yellow"/>
+					</hbox>
+				</grid>
+			</group>
+			
+			<group text="groups.test_signal" ipadding="0">
+				<grid rows="3" cols="3">
+					<label text="labels.coarse_duration" fill="true" pad.h="6" pad.v="4" vreduce="true"/>
+					<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+					<label text="labels.actual_duration" fill="true" pad.h="6" pad.v="4" vreduce="true"/>
+			
+					<knob id="tsgl"/>
+					<indicator id="tind" format="f6.3!" pad.h="6"/>
+			
+					<value id="tsgl" sline="true"/>
+					<button id="lint" text="actions.profile" pad.b="4" pad.h="6" height="20" fill="true" ui:inject="Button_yellow" led="true" />
+				</grid>
+			</group>
 		</hbox>
-	</grid>
-</group>
-
-<group text="groups.test_signal" ipadding="0">
-	<grid rows="3" cols="3">
-		<label text="labels.coarse_duration" fill="true" pad.h="6" pad.v="4" vreduce="true"/>
-		<cell rows="3"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
-		<label text="labels.actual_duration" fill="true" pad.h="6" pad.v="4" vreduce="true"/>
-
-		<knob id="tsgl"/>
-		<indicator id="tind" format="f6.3!" pad.h="6"/>
-
-		<value id="tsgl" sline="true"/>
-		<button id="lint" text="actions.profile" pad.b="4" pad.h="6" height="20" fill="true" ui:inject="Button_yellow" led="true" />
-	</grid>
-</group>
-</hbox>
-
-
-</vbox>
+	</vbox>
 </plugin>
