@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       15
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       16
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -157,6 +157,7 @@ namespace lsp
         {
             "Profiler Mono",
             "Profiler Mono",
+            "Profiler Mono",
             "P1M", // Profiler x1 Mono
             &developers::s_tronci,
             "profiler_mono",
@@ -179,6 +180,7 @@ namespace lsp
 
         const meta::plugin_t profiler_stereo =
         {
+            "Profiler Stereo",
             "Profiler Stereo",
             "Profiler Stereo",
             "P1S", // Profiler x1 Stereo
