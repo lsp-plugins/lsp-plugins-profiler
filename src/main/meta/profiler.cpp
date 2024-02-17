@@ -109,7 +109,7 @@ namespace lsp
 
         #define PROFILER_COMMON \
             BYPASS, \
-            { "stld", "State LED", U_ENUM, R_METER, F_OUT | F_INT, 0, 0, 0, 0, profiler_states }, \
+            { "stld", "State LED", U_ENUM, R_METER, F_INT, 0, 0, 0, 0, profiler_states }, \
             CALIBRATOR, \
             LATENCY_DETECTOR, \
             TEST_SIGNAL, \
