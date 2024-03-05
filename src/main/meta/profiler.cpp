@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-profiler
  * Created on: 3 авг. 2021 г.
@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       16
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       17
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -109,7 +109,7 @@ namespace lsp
 
         #define PROFILER_COMMON \
             BYPASS, \
-            { "stld", "State LED", U_ENUM, R_METER, F_OUT | F_INT, 0, 0, 0, 0, profiler_states }, \
+            { "stld", "State LED", U_ENUM, R_METER, F_INT, 0, 0, 0, 0, profiler_states }, \
             CALIBRATOR, \
             LATENCY_DETECTOR, \
             TEST_SIGNAL, \
@@ -164,6 +164,8 @@ namespace lsp
             LSP_LV2_URI("profiler_mono"),
             LSP_LV2UI_URI("profiler_mono"),
             "hwrc",
+            LSP_VST3_UID("p1m     hwrc"),
+            LSP_VST3UI_UID("p1m     hwrc"),
             0,
             NULL,
             LSP_CLAP_URI("profiler_mono"),
@@ -189,6 +191,8 @@ namespace lsp
             LSP_LV2_URI("profiler_stereo"),
             LSP_LV2UI_URI("profiler_stereo"),
             "hubw",
+            LSP_VST3_UID("p1s     hubw"),
+            LSP_VST3UI_UID("p1s     hubw"),
             0,
             NULL,
             LSP_CLAP_URI("profiler_stereo"),
