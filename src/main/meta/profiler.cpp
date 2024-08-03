@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       19
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       20
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -161,14 +161,17 @@ namespace lsp
             "P1M", // Profiler x1 Mono
             &developers::s_tronci,
             "profiler_mono",
-            LSP_LV2_URI("profiler_mono"),
-            LSP_LV2UI_URI("profiler_mono"),
-            "hwrc",
-            LSP_VST3_UID("p1m     hwrc"),
-            LSP_VST3UI_UID("p1m     hwrc"),
-            0,
-            NULL,
-            LSP_CLAP_URI("profiler_mono"),
+            {
+                LSP_LV2_URI("profiler_mono"),
+                LSP_LV2UI_URI("profiler_mono"),
+                "hwrc",
+                LSP_VST3_UID("p1m     hwrc"),
+                LSP_VST3UI_UID("p1m     hwrc"),
+                0,
+                NULL,
+                LSP_CLAP_URI("profiler_mono"),
+                LSP_GST_UID("profiler_mono"),
+            },
             LSP_PLUGINS_PROFILER_VERSION,
             plugin_classes,
             clap_features_mono,
@@ -188,14 +191,17 @@ namespace lsp
             "P1S", // Profiler x1 Stereo
             &developers::s_tronci,
             "profiler_stereo",
-            LSP_LV2_URI("profiler_stereo"),
-            LSP_LV2UI_URI("profiler_stereo"),
-            "hubw",
-            LSP_VST3_UID("p1s     hubw"),
-            LSP_VST3UI_UID("p1s     hubw"),
-            0,
-            NULL,
-            LSP_CLAP_URI("profiler_stereo"),
+            {
+                LSP_LV2_URI("profiler_stereo"),
+                LSP_LV2UI_URI("profiler_stereo"),
+                "hubw",
+                LSP_VST3_UID("p1s     hubw"),
+                LSP_VST3UI_UID("p1s     hubw"),
+                0,
+                NULL,
+                LSP_CLAP_URI("profiler_stereo"),
+                LSP_GST_UID("profiler_stereo"),
+            },
             LSP_PLUGINS_PROFILER_VERSION,
             plugin_classes,
             clap_features_stereo,
