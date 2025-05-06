@@ -80,30 +80,30 @@ namespace lsp
         #define CALIBRATOR \
             LOG_CONTROL("calf", "Frequency", "Cal freq", U_HZ, profiler_metadata::FREQUENCY), \
             AMP_GAIN10("cala", "Amplitude", profiler_metadata::AMPLITUDE_DFL), \
-            SWITCH("cals", "Calibration", 0.0f), \
-            SWITCH("fbck", "Feedback", 0.0f)
+            SWITCH("cals", "Calibration", "Callibration", 0.0f), \
+            SWITCH("fbck", "Feedback", "Feedback", 0.0f)
 
         #define LATENCY_DETECTOR \
             CONTROL("ltdm", "Max expected latency", U_MSEC, profiler_metadata::LATENCY), \
             CONTROL("ltdp", "Peak threshold", U_GAIN_AMP, profiler_metadata::PEAK_THRESHOLD), \
             CONTROL("ltda", "Absolute threshold", U_GAIN_AMP, profiler_metadata::ABS_THRESHOLD), \
-            SWITCH("ltena", "Enable Latency Detection", 1.0f), \
-            TRIGGER("latt", "Trig a Latency measurement")
+            SWITCH("ltena", "Enable Latency Detection", "Detector on", 1.0f), \
+            TRIGGER("latt", "Trig a Latency measurement", "Detector start")
 
         #define TEST_SIGNAL \
             CONTROL("tsgl", "Duration", U_SEC, profiler_metadata::DURATION), \
             METER("tind", "Actual Signal Duration", U_SEC, profiler_metadata::MTR_T), \
-            TRIGGER("lint", "Trig a Linear measurement")
+            TRIGGER("lint", "Trig a Linear measurement", "Measure start")
 
         #define POSTPROCESSOR \
             CONTROL("offc", "IR Time Offset", U_MSEC, profiler_metadata::IR_OFFSET), \
-            COMBO("scra", "RT Algorithm", profiler_metadata::SC_RTALGO_DFL, sc_rtalgo), \
-            TRIGGER("post", "Trig Post Processing")
+            COMBO("scra", "RT Algorithm", "RT algorithm", profiler_metadata::SC_RTALGO_DFL, sc_rtalgo), \
+            TRIGGER("post", "Trig Post Processing", "Postproc start")
 
         #define SAVER \
-            COMBO("scsv", "Save Mode", profiler_metadata::SC_SVMODE_DFL, sc_savemode), \
+            COMBO("scsv", "Save Mode", "Save mode", profiler_metadata::SC_SVMODE_DFL, sc_savemode), \
             PATH("irfn", "Save file name"), \
-            TRIGGER("irfc", "Save file command"), \
+            TRIGGER("irfc", "Save file command", "Save file"), \
             STATUS("irfs", "File saving status"), \
             METER_PERCENT("irfp", "File saving progress")
 
