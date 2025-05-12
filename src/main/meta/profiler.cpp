@@ -84,19 +84,19 @@ namespace lsp
             SWITCH("fbck", "Feedback", "Feedback", 0.0f)
 
         #define LATENCY_DETECTOR \
-            CONTROL("ltdm", "Max expected latency", U_MSEC, profiler_metadata::LATENCY), \
-            CONTROL("ltdp", "Peak threshold", U_GAIN_AMP, profiler_metadata::PEAK_THRESHOLD), \
-            CONTROL("ltda", "Absolute threshold", U_GAIN_AMP, profiler_metadata::ABS_THRESHOLD), \
+            CONTROL("ltdm", "Max expected latency", "Max latency", U_MSEC, profiler_metadata::LATENCY), \
+            CONTROL("ltdp", "Peak threshold", "Peak thresh", U_GAIN_AMP, profiler_metadata::PEAK_THRESHOLD), \
+            CONTROL("ltda", "Absolute threshold", "Abs thresh", U_GAIN_AMP, profiler_metadata::ABS_THRESHOLD), \
             SWITCH("ltena", "Enable Latency Detection", "Detector on", 1.0f), \
             TRIGGER("latt", "Trig a Latency measurement", "Detector start")
 
         #define TEST_SIGNAL \
-            CONTROL("tsgl", "Duration", U_SEC, profiler_metadata::DURATION), \
+            CONTROL("tsgl", "Duration", "Duration", U_SEC, profiler_metadata::DURATION), \
             METER("tind", "Actual Signal Duration", U_SEC, profiler_metadata::MTR_T), \
             TRIGGER("lint", "Trig a Linear measurement", "Measure start")
 
         #define POSTPROCESSOR \
-            CONTROL("offc", "IR Time Offset", U_MSEC, profiler_metadata::IR_OFFSET), \
+            CONTROL("offc", "IR Time Offset", "IR offset", U_MSEC, profiler_metadata::IR_OFFSET), \
             COMBO("scra", "RT Algorithm", "RT algorithm", profiler_metadata::SC_RTALGO_DFL, sc_rtalgo), \
             TRIGGER("post", "Trig Post Processing", "Postproc start")
 
