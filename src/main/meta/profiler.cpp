@@ -79,7 +79,7 @@ namespace lsp
 
         #define CALIBRATOR \
             LOG_CONTROL("calf", "Frequency", "Cal freq", U_HZ, profiler_metadata::FREQUENCY), \
-            AMP_GAIN10("cala", "Amplitude", profiler_metadata::AMPLITUDE_DFL), \
+            AMP_GAIN10("cala", "Amplitude", "Amplitude", profiler_metadata::AMPLITUDE_DFL), \
             SWITCH("cals", "Calibration", "Callibration", 0.0f), \
             SWITCH("fbck", "Feedback", "Feedback", 0.0f)
 
