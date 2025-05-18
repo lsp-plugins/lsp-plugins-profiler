@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-profiler
  * Created on: 3 авг. 2021 г.
@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       24
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       25
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -78,38 +78,38 @@ namespace lsp
         };
 
         #define CALIBRATOR \
-            LOG_CONTROL("calf", "Frequency", U_HZ, profiler_metadata::FREQUENCY), \
-            AMP_GAIN10("cala", "Amplitude", profiler_metadata::AMPLITUDE_DFL), \
-            SWITCH("cals", "Calibration", 0.0f), \
-            SWITCH("fbck", "Feedback", 0.0f)
+            LOG_CONTROL("calf", "Frequency", "Cal freq", U_HZ, profiler_metadata::FREQUENCY), \
+            AMP_GAIN10("cala", "Amplitude", "Amplitude", profiler_metadata::AMPLITUDE_DFL), \
+            SWITCH("cals", "Calibration", "Callibration", 0.0f), \
+            SWITCH("fbck", "Feedback", "Feedback", 0.0f)
 
         #define LATENCY_DETECTOR \
-            CONTROL("ltdm", "Max expected latency", U_MSEC, profiler_metadata::LATENCY), \
-            CONTROL("ltdp", "Peak threshold", U_GAIN_AMP, profiler_metadata::PEAK_THRESHOLD), \
-            CONTROL("ltda", "Absolute threshold", U_GAIN_AMP, profiler_metadata::ABS_THRESHOLD), \
-            SWITCH("ltena", "Enable Latency Detection", 1.0f), \
-            TRIGGER("latt", "Trig a Latency measurement")
+            CONTROL("ltdm", "Max expected latency", "Max latency", U_MSEC, profiler_metadata::LATENCY), \
+            CONTROL("ltdp", "Peak threshold", "Peak thresh", U_GAIN_AMP, profiler_metadata::PEAK_THRESHOLD), \
+            CONTROL("ltda", "Absolute threshold", "Abs thresh", U_GAIN_AMP, profiler_metadata::ABS_THRESHOLD), \
+            SWITCH("ltena", "Enable Latency Detection", "Detector on", 1.0f), \
+            TRIGGER("latt", "Trig a Latency measurement", "Detector start")
 
         #define TEST_SIGNAL \
-            CONTROL("tsgl", "Duration", U_SEC, profiler_metadata::DURATION), \
+            CONTROL("tsgl", "Duration", "Duration", U_SEC, profiler_metadata::DURATION), \
             METER("tind", "Actual Signal Duration", U_SEC, profiler_metadata::MTR_T), \
-            TRIGGER("lint", "Trig a Linear measurement")
+            TRIGGER("lint", "Trig a Linear measurement", "Measure start")
 
         #define POSTPROCESSOR \
-            CONTROL("offc", "IR Time Offset", U_MSEC, profiler_metadata::IR_OFFSET), \
-            COMBO("scra", "RT Algorithm", profiler_metadata::SC_RTALGO_DFL, sc_rtalgo), \
-            TRIGGER("post", "Trig Post Processing")
+            CONTROL("offc", "IR Time Offset", "IR offset", U_MSEC, profiler_metadata::IR_OFFSET), \
+            COMBO("scra", "RT Algorithm", "RT algorithm", profiler_metadata::SC_RTALGO_DFL, sc_rtalgo), \
+            TRIGGER("post", "Trig Post Processing", "Postproc start")
 
         #define SAVER \
-            COMBO("scsv", "Save Mode", profiler_metadata::SC_SVMODE_DFL, sc_savemode), \
+            COMBO("scsv", "Save Mode", "Save mode", profiler_metadata::SC_SVMODE_DFL, sc_savemode), \
             PATH("irfn", "Save file name"), \
-            TRIGGER("irfc", "Save file command"), \
+            TRIGGER("irfc", "Save file command", "Save file"), \
             STATUS("irfs", "File saving status"), \
             METER_PERCENT("irfp", "File saving progress")
 
         #define PROFILER_COMMON \
             BYPASS, \
-            { "stld", "State LED", U_ENUM, R_METER, F_INT, 0, 0, 0, 0, profiler_states }, \
+            ENUM_METER("stld", "State LED", 0, profiler_states), \
             CALIBRATOR, \
             LATENCY_DETECTOR, \
             TEST_SIGNAL, \
