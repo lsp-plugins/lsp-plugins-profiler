@@ -78,7 +78,7 @@
 </p>
 <p>
     One time latency measurements are also useful when the signal level for optimal latency detection is higher than that for system profiling.
-    If this is the case, set the test signal amplitude for optimal latency measurement by operating the <b>Amplitude</b> control in the <b>'Calibrator'</b> section, 
+    If this is the case, set the test signal amplitude for optimal latency measurement by operating the <b>Amplitude</b> control in the <b>'Calibrator'</b> section,
     measure latency, disable the Latency Detector by disabling the <b>Enable</b> button in the <b>'Latency Detector'</b> section,
     and reset the amplitude control to the optimal value for audio system response profile (as discussed in Section 2).
 </p>
@@ -131,12 +131,12 @@
     <li>Coarse Linear Impulse Response Duration</li>
 </ul>
 <p>
-    All the quantities above are mostly relevant for linear time invariant (LTI) systems. The result will be displayed and postprocessed from the 
+    All the quantities above are mostly relevant for linear time invariant (LTI) systems. The result will be displayed and postprocessed from the
     time originle of the Linear Impulse Response estimate of the system.
 </p>
 <p>
     To change this, operate the <b>Offset</b> control in the <b>'Results'</b> section, which allows to introduce a time offset.
-    For numerical reasons, few details of the measured Linear Impulse Response are mapped into negative time samples to the left ot the origin of time.
+    For numerical reasons, few details of the measured Linear Impulse Response are mapped into negative time samples to the left of the origin of time.
     In case the spread of the Linear Impulse Response to the left of the origin of time is important, introducing a negative offset will increase accuracy of the calculations listed above, as well as providing a more accurate measurement.
     The Reverberation Time can be calculated with any of the algorithms in the <b>RT Algorithm</b> selector in the <b>'Results'</b> section. All the algorithms are based in calculating,
     from the Linear Impulse Response, the Energy Decay curve through backward integration, fitting a straight line in the Energy Decay curve in a
@@ -171,7 +171,7 @@
     Auto should be able to save all the meaningful parts of the Linear Impulse Response.
 </p>
 <p>
-	Whenever the plugin is saving to file, its state will be SAVING and the corresponding LED in the <b>'Results'</b> 
+	Whenever the plugin is saving to file, its state will be SAVING and the corresponding LED in the <b>'Results'</b>
 	section will shine.
 </p>
 
