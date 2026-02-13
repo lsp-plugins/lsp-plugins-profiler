@@ -178,7 +178,7 @@ namespace lsp
             clap_features_mono,
             E_DUMP_STATE,
             profiler_mono_ports,
-            "util/profiler/mono.xml",
+            "plugins/util/profiler/mono.xml",
             NULL,
             mono_plugin_port_groups,
             &profiler_bundle
@@ -209,7 +209,7 @@ namespace lsp
             clap_features_stereo,
             E_DUMP_STATE,
             profiler_stereo_ports,
-            "util/profiler/stereo.xml",
+            "plugins/util/profiler/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
             &profiler_bundle
