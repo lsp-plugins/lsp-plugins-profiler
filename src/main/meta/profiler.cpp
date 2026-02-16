@@ -181,7 +181,8 @@ namespace lsp
             "plugins/util/profiler/mono.xml",
             NULL,
             mono_plugin_port_groups,
-            &profiler_bundle
+            &profiler_bundle,
+            2
         };
         LSP_REGISTER_METADATA(profiler_mono);
 
@@ -212,7 +213,8 @@ namespace lsp
             "plugins/util/profiler/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
-            &profiler_bundle
+            &profiler_bundle,
+            1
         };
         LSP_REGISTER_METADATA(profiler_stereo);
 
