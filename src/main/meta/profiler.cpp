@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2026 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2026 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-profiler
  * Created on: 3 авг. 2021 г.
@@ -20,13 +20,14 @@
  */
 
 #include <lsp-plug.in/plug-fw/meta/ports.h>
+#include <lsp-plug.in/plug-fw/meta/registry.h>
 #include <lsp-plug.in/shared/meta/developers.h>
 #include <lsp-plug.in/common/status.h>
 #include <private/meta/profiler.h>
 
 #define LSP_PLUGINS_PROFILER_VERSION_MAJOR       1
 #define LSP_PLUGINS_PROFILER_VERSION_MINOR       0
-#define LSP_PLUGINS_PROFILER_VERSION_MICRO       29
+#define LSP_PLUGINS_PROFILER_VERSION_MICRO       30
 
 #define LSP_PLUGINS_PROFILER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -177,11 +178,13 @@ namespace lsp
             clap_features_mono,
             E_DUMP_STATE,
             profiler_mono_ports,
-            "util/profiler/mono.xml",
+            "plugins/util/profiler/mono.xml",
             NULL,
             mono_plugin_port_groups,
-            &profiler_bundle
+            &profiler_bundle,
+            2
         };
+        LSP_REGISTER_METADATA(profiler_mono);
 
         const meta::plugin_t profiler_stereo =
         {
@@ -207,10 +210,13 @@ namespace lsp
             clap_features_stereo,
             E_DUMP_STATE,
             profiler_stereo_ports,
-            "util/profiler/stereo.xml",
+            "plugins/util/profiler/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
-            &profiler_bundle
+            &profiler_bundle,
+            1
         };
+        LSP_REGISTER_METADATA(profiler_stereo);
+
     } /* namespace meta */
 } /* namespace lsp */
